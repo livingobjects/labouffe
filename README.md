@@ -1,7 +1,10 @@
 
 LA BOUFFE
 
-Etapes proposées :
+## Documentation
+See documentation [here](labouffe.pdf)
+
+## Etapes proposées :
 
 1. Enoncer la problèmatique auquel on veut répondre
 2. Proposer des solutions. Découper les uses cases (workflow users)
@@ -15,13 +18,11 @@ Etapes proposées :
 9. Impléméntation back
 
 
-Specification :
+## Specification :
 
 - recevoir des évènements en temps réels
 
-
-
-Backlog :
+## Backlog :
 
 - afficher une carte
 - (géolocaliser les utilisateurs)
