@@ -6,7 +6,7 @@ See documentation [here](labouffe.pdf)
 
 ## Etapes proposées :
 
-1. Enoncer la problèmatique auquel on veut répondre
+1. Enoncer la/les problèmatique(s) auxquelles on veut répondre
 2. Proposer des solutions. Découper les uses cases (workflow users)
 3. Faire une maquette dessinnée
 4. Test d'API (API mockée)
