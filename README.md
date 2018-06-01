@@ -18,12 +18,25 @@ See documentation [here](labouffe.pdf)
 9. Impléméntation back
 
 
+## Problèmes :
+- Quels sont les resto ouverts au jour J
+- Qui propose de manger où
+- Difficulté de prévenir tout le monde pour une proposition
+- Il faut partir parfois à un resto avant un heure H
+
 ## Specification :
 
-- recevoir des évènements en temps réels
+- appli web sur navigateur (responsive)
+- afficher une page en temps réel avec les restos enregistrés par les users, avec les votes associés
+- on peut ajouter un resto (nom, description)
+- on peut voter pour un resto
+- on peut annuler son vote
+- chaque jour reset tous les votes
 
 ## Backlog :
 
+
+- moment ou il faut partir au resto (pour qu'il soit ouvert ou qu'il reste des plats)
 - afficher une carte
 - (géolocaliser les utilisateurs)
 - connexion LDAP entreprise
