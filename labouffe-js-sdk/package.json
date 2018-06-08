@@ -16,7 +16,9 @@
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "modulePathIgnorePatterns": ["./dist"],
+    "modulePathIgnorePatterns": [
+      "./dist"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -27,9 +29,13 @@
     ]
   },
   "dependencies": {},
+  "peerDependencies": {
+    "rxjs": ">=6.0"
+  },
   "devDependencies": {
     "@types/jest": "^23.0.0",
     "jest": "^23.1.0",
+    "rxjs": "^6.2.0",
     "ts-jest": "^22.4.6",
     "tslint": "^5.10.0",
     "typescript": "^2.9.1"
