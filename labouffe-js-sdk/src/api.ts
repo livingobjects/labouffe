@@ -5,13 +5,13 @@ export interface FoodPlace {
 }
 
 export class LaBouffe {
-    foodPlaces = new BehaviorSubject<FoodPlace[]>([]);
+    public foodPlaces = new BehaviorSubject<FoodPlace[]>([]);
 
-    findFoodPlaces(): Observable<FoodPlace[]> {
+    public findFoodPlaces(): Observable<FoodPlace[]> {
         return this.foodPlaces;
     }
 
-    addFoodPlace(foodPlace: FoodPlace) {
+    public addFoodPlace(foodPlace: FoodPlace) {
         const lastState = [...this.foodPlaces.getValue()];
         if (!lastState.find((item) => {
             return item.name === foodPlace.name;
@@ -21,11 +21,11 @@ export class LaBouffe {
         this.foodPlaces.next(lastState);
     }
 
-    updateFoodPlaces(foodPlaces: FoodPlace[]) {
+    public updateFoodPlaces(foodPlaces: FoodPlace[]) {
         this.foodPlaces.next(foodPlaces);
     }
 
-    deleteFoodPlace(foodPlace: FoodPlace) {
+    public deleteFoodPlace(foodPlace: FoodPlace) {
         const lastState = [...this.foodPlaces.getValue()];
         const newState = lastState.filter((item) => {
             return item.name !== foodPlace.name;
