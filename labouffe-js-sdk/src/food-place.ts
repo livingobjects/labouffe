@@ -1,9 +1,14 @@
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from 'rxjs';
+import { State } from './api';
 
 export interface FoodPlace {
     name: string;
     votes: string[];
 }
+
+export const list = (state: State) => {
+    return state.foodPlaces;
+};
 
 export class FoodPlaceApi {
 
@@ -13,15 +18,15 @@ export class FoodPlaceApi {
         return this.foodPlaces;
     }
 
-    public add(foodPlace: FoodPlace) {
+    /*public add(foodPlace: FoodPlace) {
         const lastState = [...this.foodPlaces.getValue()];
         if (!lastState.find((item) => {
             return item.name === foodPlace.name;
         })) {
-            lastState.push({...foodPlace, voteCount: foodPlace.voteCount || 0});
+            lastState.push({ ...foodPlace, voteCount: foodPlace.voteCount || 0 });
         }
         this.foodPlaces.next(lastState);
-    }
+    }*/
 
     public update(foodPlaces: FoodPlace[]) {
         this.foodPlaces.next(foodPlaces);
@@ -57,8 +62,8 @@ export class FoodPlaceApi {
             return item.name === foodPlaceName;
         });
 
-        const canBeDownVoted = myFoodPlace && myFoodPlace.votes 
-        && myFoodPlace.votes.includes(userName);
+        const canBeDownVoted = myFoodPlace && myFoodPlace.votes
+            && myFoodPlace.votes.includes(userName);
 
         if (canBeDownVoted) {
             myFoodPlace.votes = myFoodPlace.votes.filter((voteName) => voteName !== userName);
