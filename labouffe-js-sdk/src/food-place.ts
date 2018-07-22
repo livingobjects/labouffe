@@ -1,74 +1,52 @@
-import { BehaviorSubject, Observable } from 'rxjs';
-import { State } from './api';
+import { LaBouffeApi, InternalLaBouffeApi } from './api';
+import { Observable } from 'rxjs';
 
 export interface FoodPlace {
     name: string;
     votes: string[];
 }
 
-export const list = (state: State) => {
-    return state.foodPlaces;
+LaBouffeApi.prototype.addFoodPlace = function (this: InternalLaBouffeApi, foodPlace: FoodPlace) {
+    return new Observable<void>((observer) => {
+        const newFoodPlaces = [...this.database.foodPlaces.getValue()];
+        if (findFoodPlaceIndex(newFoodPlaces, foodPlace) > -1) {
+            observer.error(`FoodPlace ${foodPlace.name} already added`);
+            return;
+        }
+        newFoodPlaces.push(foodPlace);
+        this.database.foodPlaces.next(newFoodPlaces);
+        observer.next(undefined);
+    });
 };
 
-export class FoodPlaceApi {
+LaBouffeApi.prototype.getFoodPlaces = function (this: InternalLaBouffeApi): Observable<FoodPlace[]> {
+    return this.database.foodPlaces.asObservable();
+};
 
-    public foodPlaces = new BehaviorSubject<FoodPlace[]>([]);
-
-    public list(): Observable<FoodPlace[]> {
-        return this.foodPlaces;
-    }
-
-    /*public add(foodPlace: FoodPlace) {
-        const lastState = [...this.foodPlaces.getValue()];
-        if (!lastState.find((item) => {
-            return item.name === foodPlace.name;
-        })) {
-            lastState.push({ ...foodPlace, voteCount: foodPlace.voteCount || 0 });
+LaBouffeApi.prototype.removeFoodPlace = function (this: InternalLaBouffeApi, foodPlace: FoodPlace): Observable<void> {
+    return new Observable((observer) => {
+        const newFoodPlaces = [...this.database.foodPlaces.getValue()];
+        const foodPlaceIndex = findFoodPlaceIndex(newFoodPlaces, foodPlace);
+        if (foodPlaceIndex < 0) {
+            observer.error(`FoodPlace ${foodPlace.name} doesn't exist`);
+            return;
         }
-        this.foodPlaces.next(lastState);
-    }*/
+        newFoodPlaces.splice(foodPlaceIndex, 1);
+        this.database.foodPlaces.next(newFoodPlaces);
+        observer.next(undefined);
+    });
+};
 
-    public update(foodPlaces: FoodPlace[]) {
-        this.foodPlaces.next(foodPlaces);
-    }
+export const findFoodPlaceIndex = (foodPlaces: FoodPlace[], foodPlace: FoodPlace) => {
+    return foodPlaces.findIndex((item) => {
+        return item.name === foodPlace.name;
+    });
+};
 
-    public delete(foodPlace: FoodPlace) {
-        const lastState = [...this.foodPlaces.getValue()];
-        const newState = lastState.filter((item) => {
-            return item.name !== foodPlace.name;
-        });
-        this.foodPlaces.next(newState);
-    }
-
-    public upVote(foodPlace: FoodPlace) {
-        const lastState = [...this.foodPlaces.getValue()];
-        const myFoodPlace = lastState.find((item) => {
-            return item.name === foodPlace.name;
-        });
-
-        if (myFoodPlace) {
-            if (myFoodPlace.voteCount === undefined) {
-                myFoodPlace.voteCount = 0;
-            }
-            myFoodPlace.voteCount++;
-        }
-
-        this.foodPlaces.next(lastState);
-    }
-
-    public downVote(foodPlaceName: string, userName: string) {
-        const lastState = [...this.foodPlaces.getValue()];
-        const myFoodPlace = lastState.find((item) => {
-            return item.name === foodPlaceName;
-        });
-
-        const canBeDownVoted = myFoodPlace && myFoodPlace.votes
-            && myFoodPlace.votes.includes(userName);
-
-        if (canBeDownVoted) {
-            myFoodPlace.votes = myFoodPlace.votes.filter((voteName) => voteName !== userName);
-        }
-
-        this.foodPlaces.next(lastState);
+declare module './api' {
+    interface LaBouffeApi {
+        getFoodPlaces(): Observable<FoodPlace[]>;
+        addFoodPlace(foodPlace: FoodPlace): Observable<void>;
+        removeFoodPlace(foodPlace: FoodPlace): Observable<void>;
     }
 }
