@@ -3,7 +3,6 @@
     <v-toolbar
       app
     >
-      <v-toolbar-side-icon></v-toolbar-side-icon>
       <v-toolbar-title>La Bouffe</v-toolbar-title>
     </v-toolbar>
     <v-content>
