@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 export interface FoodPlace {
     name: string;
-    votes: string[];
 }
 
 LaBouffeApi.prototype.addFoodPlace = function (this: InternalLaBouffeApi, foodPlace: FoodPlace) {
@@ -37,9 +36,13 @@ LaBouffeApi.prototype.removeFoodPlace = function (this: InternalLaBouffeApi, foo
     });
 };
 
+export const getId = (foodPlace: FoodPlace): string => {
+    return foodPlace.name;
+}
+
 export const findFoodPlaceIndex = (foodPlaces: FoodPlace[], foodPlace: FoodPlace) => {
     return foodPlaces.findIndex((item) => {
-        return item.name === foodPlace.name;
+        return item.name === getId(foodPlace);
     });
 };
 
