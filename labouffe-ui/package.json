@@ -9,22 +9,24 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "rxjs": "^6.2.2",
+    "rxjs": "^6.3.3",
     "vue": "^2.5.17",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^7.0.0",
+    "vue-class-component": "^6.2.0",
+    "vue-property-decorator": "^7.2.0",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.0.19"
+    "vuetify": "^1.2.8"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.4",
-    "@vue/cli-plugin-typescript": "^3.0.1",
-    "@vue/cli-plugin-unit-jest": "^3.0.1",
-    "@vue/cli-service": "^3.0.1",
-    "@vue/test-utils": "^1.0.0-beta.20",
-    "ts-jest": "^23.0.0",
-    "typescript": "^3.0.0",
-    "vue-cli-plugin-vuetify": "^0.1.6",
+    "@types/jest": "^23.3.5",
+    "@types/node": "^10.11.7",
+    "@vue/cli-plugin-typescript": "^3.0.5",
+    "@vue/cli-plugin-unit-jest": "^3.0.5",
+    "@vue/cli-service": "^3.0.5",
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "ts-jest": "^23.10.4",
+    "tslint-language-service": "^0.9.9",
+    "typescript": "^3.1.2",
+    "vue-cli-plugin-vuetify": "^0.2.1",
     "vue-template-compiler": "^2.5.17"
   }
 }

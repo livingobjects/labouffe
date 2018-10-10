@@ -11,7 +11,7 @@ LaBouffeApi.prototype.getVotes = function (this: InternalLaBouffeApi): Observabl
     return this.database.votes.asObservable();
 };
 
-LaBouffeApi.prototype.vote = function (this: InternalLaBouffeApi, username: string, foodPlace: FoodPlace) {
+LaBouffeApi.prototype.toggleVote = function (this: InternalLaBouffeApi, username: string, foodPlace: FoodPlace) {
     return new Observable<void>((observer) => {
         const newFoodPlaces = [...this.database.foodPlaces.getValue()];
         const foodPlaceIndex = findFoodPlaceIndex(newFoodPlaces, foodPlace);
@@ -22,30 +22,15 @@ LaBouffeApi.prototype.vote = function (this: InternalLaBouffeApi, username: stri
         }
 
         const foodPlaceId = getId(foodPlace);
+        const votes = [...this.database.votes.getValue()];
+        const voteIndex = votes.findIndex((vote) => vote.username === username && vote.foodPlaceId === foodPlaceId);
 
-        const votes = [...this.database.votes.getValue(), { username, foodPlaceId }];
-
-        this.database.votes.next(votes);
-        observer.next(undefined);
-        observer.complete();
-    });
-};
-
-LaBouffeApi.prototype.unVote = function (this: InternalLaBouffeApi, username: string, foodPlace: FoodPlace) {
-    return new Observable<void>((observer) => {
-        const newFoodPlaces = [...this.database.foodPlaces.getValue()];
-        const foodPlaceIndex = findFoodPlaceIndex(newFoodPlaces, foodPlace);
-
-        if (foodPlaceIndex < 0) {
-            observer.error(`FoodPlace ${foodPlace.name} doesn't exist`);
-            return;
+        if (voteIndex < 0) {
+            votes.push({ username, foodPlaceId });
+        } else {
+            votes.splice(voteIndex, 1);
         }
 
-        const foodPlaceId = getId(foodPlace);
-
-        const votes = [...this.database.votes.getValue()].filter((vote) =>
-            vote.username !== username && vote.foodPlaceId !== foodPlaceId
-        );
         this.database.votes.next(votes);
         observer.next(undefined);
         observer.complete();
@@ -54,8 +39,7 @@ LaBouffeApi.prototype.unVote = function (this: InternalLaBouffeApi, username: st
 
 declare module './api' {
     interface LaBouffeApi {
-        vote(username: string, foodPlace: FoodPlace): Observable<void>;
-        unVote(username: string, foodPlace: FoodPlace): Observable<void>;
         getVotes(): Observable<Vote[]>;
+        toggleVote(username: string, foodPlace: FoodPlace): Observable<void>;
     }
 }

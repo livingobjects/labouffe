@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { LaBouffeApi, FoodPlace } from "@/sdk";
+import { LaBouffeApi, FoodPlace } from "labouffe-js-sdk";
 import { switchMapTo } from "rxjs/operators";
 
 @Component
@@ -39,14 +39,14 @@ export default class HelloWorld extends Vue {
 
   mounted() {
     this.api = new LaBouffeApi();
-    const mcdo: FoodPlace = { name: "Mc Donald's", votes: [] };
+    const mcdo: FoodPlace = { name: "Mc Donald's" };
     this.api
       .addFoodPlace(mcdo)
       .pipe(switchMapTo(this.api.getFoodPlaces()))
       .subscribe(foodPlaces => {
         this.foodPlaces = foodPlaces;
       });
-      const buffalo: FoodPlace = { name: "Buffalo Grill", votes: [] };
+      const buffalo: FoodPlace = { name: "Buffalo Grill" };
       this.api.addFoodPlace(buffalo).subscribe();
   }
 }

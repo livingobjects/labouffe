@@ -62,8 +62,8 @@ describe('Foodplaces', () => {
 
     it('should refuse to remove a non existent foodplace', (done) => {
         const api = new LaBouffeApi([
-                { name: 'Subway' }
-            ]);
+            { name: 'Subway' }
+        ]);
 
         api.removeFoodPlace({ name: 'MacDo' }).pipe(
             first(),

@@ -38,7 +38,7 @@ LaBouffeApi.prototype.removeFoodPlace = function (this: InternalLaBouffeApi, foo
 
 export const getId = (foodPlace: FoodPlace): string => {
     return foodPlace.name;
-}
+};
 
 export const findFoodPlaceIndex = (foodPlaces: FoodPlace[], foodPlace: FoodPlace) => {
     return foodPlaces.findIndex((item) => {
